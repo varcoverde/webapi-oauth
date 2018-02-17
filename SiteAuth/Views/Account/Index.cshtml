@@ -1,0 +1,19 @@
+﻿@using SiteAuth.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" action="@Url.Action("Index","Account")">
+    <input type="text" name="Username" value="victor" /><br />
+    <input type="password" name="Password" value="1234" /><br />
+    <input type="submit" value="Logar" />
+</form>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>Autenticado</h1>
+    <h3>Token: @User.Identity.Name</h3>
+    <a href="@Url.Action("SignOut", "Account")">Sair</a>
+}

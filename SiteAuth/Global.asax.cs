@@ -2,6 +2,7 @@
 using SiteAuth.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Services;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -21,7 +22,7 @@ namespace SiteAuth
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-
+        /*
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
             var context = HttpContext.Current;
@@ -44,5 +45,6 @@ namespace SiteAuth
             customPrincipal.Email = user.Email;
             Thread.CurrentPrincipal = Context.User = customPrincipal;
         }
+        */
     }
 }

@@ -20,27 +20,21 @@ namespace SiteAuth.Controllers
         [HttpPost]
         public ActionResult Index(string Username, string Password)
         {
-            var client = new RestClient("http://api.localoauth.com.br");
-
-            var request = new RestRequest("api/security/token", Method.POST);
-            request.AddParameter("grant_type", "password");
-            request.AddParameter("username", Username);
-            request.AddParameter("password", Password);
-
-            IRestResponse<TokenViewModel> response = client.Execute<TokenViewModel>(request);
-            var token = response.Data.access_token;
-
-            if (!String.IsNullOrEmpty(token))
-                FormsAuthentication.SetAuthCookie(token, false);
+            //var client = new RestClient("http://api.localoauth.com.br");
+            //
+            //var request = new RestRequest("api/security/token", Method.POST);
+            //request.AddParameter("grant_type", "password");
+            //request.AddParameter("username", Username);
+            //request.AddParameter("password", Password);
+            //
+            //IRestResponse<TokenViewModel> response = client.Execute<TokenViewModel>(request);
+            //var token = response.Data.access_token;
+            //
+            //if (!String.IsNullOrEmpty(token))
+            //    FormsAuthentication.SetAuthCookie(token, false);
 
             
 
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult Logout()
-        {
-            FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
     }

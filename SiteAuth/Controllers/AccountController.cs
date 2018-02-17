@@ -15,14 +15,20 @@ namespace SiteAuth.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+        [AllowAnonymous]
         public ActionResult Index()
         {
+
+            var cp = (ClaimsPrincipal)User;
+            var email = cp.FindFirst(ClaimTypes.Email);
+
+
             return View();
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Index(LoginModel model, string returnUrl)
         {
             if (ModelState.IsValid) //Required, string length etc
             {
@@ -41,6 +47,10 @@ namespace SiteAuth.Controllers
 
                     //FormsAuthentication.SetAuthCookie(user.Name, false);
                     SetAuthCookie(user);
+
+                    SetClaimsCookie(user);
+
+
                     //redirect to returnUrl
                     if (!string.IsNullOrEmpty(returnUrl) &&
                         Url.IsLocalUrl(returnUrl) &&
@@ -95,8 +105,15 @@ namespace SiteAuth.Controllers
             var sessionAuthenticationModule = FederatedAuthentication.SessionAuthenticationModule;
             sessionAuthenticationModule.CookieHandler.Delete();
 
+            if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+            {
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName);
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookie);
+            }
+            
             //FormsAuthentication.SignOut();
-            return Redirect("~/");
+            return Redirect("Index");
         }
     }
 }
